@@ -1,0 +1,18 @@
+# the version of the Docker compose syntax that we're going to be
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000"
+    # volumes add way of mapping directories from our system into the Docker container
+    # The reason we add this is because we wnat to update that we make to our code in our local project to be 
+    # reflected in the running container in real time. So we don't want to have to rebuild the container
+    volumes: 
+      - ./app:/app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
